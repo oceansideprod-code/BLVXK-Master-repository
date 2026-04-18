@@ -377,5 +377,4 @@ def send_telegram_message(text: str):
     response.raise_for_status()
 
 if __name__ == "__main__":
-    report = build_report()
-    send_telegram_message(report)
+    send_telegram_message("Test message from GitHub Actions")
