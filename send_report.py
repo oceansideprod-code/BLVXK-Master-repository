@@ -340,30 +340,30 @@ def build_report():
     schedule = get_schedule_text()
 
     lines = [
-        f"🎴 *Daily Anime Report*",
-        escape_markdown(today),
+        "🎴 Daily Anime Report",
+        today,
         "",
     ]
 
     if not items:
         lines.append("No fresh anime items were found this cycle. The news sea is calm today.")
     else:
-        for idx, item in enumerate(items, start=1):
-            title = escape_markdown(item["title"])
-            url = item["url"]
-            matches = ", ".join(item.get("matches", [])[:2]) or "general anime relevance"
-            match_text = escape_markdown(matches)
-            lines.append(f"{idx}\. [{title}]({url})")
-            lines.append(f"   Relevance: *{item['relevancy_score']}*  •  Match: {match_text}")
-
+  for idx, item in enumerate(items, start=1):
+    title = item["title"]
+    url = item["url"]
+    matches = ", ".join(item.get("matches", [])[:2]) or "general anime relevance"
+    lines.append(f"{idx}. {title}")
+    lines.append(f"   Relevance: {item['relevancy_score']} | Match: {matches}")
+    lines.append(f"   {url}")
     lines.extend([
-        "",
-        "💬 *Motivation*",
-        escape_markdown(motivation),
-        "",
-        "📅 *Today’s Schedule*",
-        escape_markdown(schedule),
-    ])
+   lines.extend([
+    "",
+    "💬 Motivation",
+    motivation,
+    "",
+    "📅 Today’s Schedule",
+    schedule,
+])
     return "\n".join(lines)
 
 def send_telegram_message(text: str):
@@ -371,7 +371,6 @@ def send_telegram_message(text: str):
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
-        "parse_mode": "MarkdownV2",
         "disable_web_page_preview": False,
     }
     response = requests.post(url, json=payload, timeout=30)
